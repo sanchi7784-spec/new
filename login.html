@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | AppVerge Private Limited</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="vendor.min.css">
+    <link rel="stylesheet" href="app.min.css">
+    <link href="https://cdn.prod.website-files.com/68f4ee72649c170da7026b71/css/layrinth.webflow.shared.36e3e47f9.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>WebFont.load({ google: { families: ["Inter:regular,500,600,700"] } });</script>
+    <link href="https://cdn.prod.website-files.com/68f4ee72649c170da7026b71/68f4eeb9d0cdc0f8bf677238_Fav.svg" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        html { overflow-y: scroll !important; height: auto !important; }
+        body {
+            overflow: hidden !important;
+            height: auto !important;
+            overflow-x: hidden !important;
+            background: #07100a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ── Page wrapper ── */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Slim navbar ── */
+        .auth-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(7,16,10,0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .auth-nav img { height: 42px; }
+        .auth-nav-links { display: flex; gap: 10px; }
+        .auth-nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-ghost {
+            color: rgba(255,255,255,0.75);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-ghost:hover { border-color: #14ffc3; color: #14ffc3; }
+        .btn-teal-solid {
+            background: #14ffc3;
+            color: #000;
+            font-weight: 600;
+        }
+        .btn-teal-solid:hover { background: #00e0aa; color: #000; }
+
+        /* ── Auth card ── */
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-main::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(20,255,195,0.07) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .auth-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 44px 48px;
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(12px);
+        }
+        .auth-logo-wrap {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .auth-logo-wrap img { height: 48px; }
+        .auth-card h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .auth-card .auth-sub {
+            text-align: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        /* ── Form ── */
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 8px;
+        }
+        .form-control-auth {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control-auth::placeholder { color: rgba(255,255,255,0.25); }
+        .form-control-auth:focus {
+            border-color: #14ffc3;
+            box-shadow: 0 0 0 3px rgba(20,255,195,0.12);
+        }
+        .input-icon-wrap {
+            position: relative;
+        }
+        .input-icon-wrap .form-control-auth { padding-right: 44px; }
+        .input-icon-wrap .toggle-pw {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.35);
+            cursor: pointer;
+            font-size: 15px;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .toggle-pw:hover { color: #14ffc3; }
+
+        .forgot-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -10px;
+            margin-bottom: 24px;
+        }
+        .forgot-row a {
+            font-size: 13px;
+            color: #14ffc3;
+            text-decoration: none;
+        }
+        .forgot-row a:hover { text-decoration: underline; }
+
+        .btn-submit {
+            width: 100%;
+            background: #14ffc3;
+            color: #000;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background: #00e0aa; transform: translateY(-1px); }
+        .btn-submit:active { transform: translateY(0); }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: rgba(255,255,255,0.25);
+            font-size: 13px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-social {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .btn-social:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .btn-social img { width: 18px; height: 18px; }
+
+        .auth-footer-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+        .auth-footer-text a {
+            color: #14ffc3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-footer-text a:hover { text-decoration: underline; }
+
+        .auth-terms {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.25);
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        .auth-terms a { color: rgba(255,255,255,0.45); text-decoration: none; }
+        .auth-terms a:hover { color: #14ffc3; }
+
+        @media (max-width: 520px) {
+            .auth-card { padding: 32px 24px; }
+            .auth-nav { padding: 14px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="auth-page">
+
+    <!-- ── Navbar ──
+    <nav class="auth-nav">
+        <a href="/"><img src="Group 3 (4)-Photoroom.png" alt="AppVerge" /></a>
+        <div class="auth-nav-links">
+            <a href="register.html" class="btn-ghost">Create Account</a>
+            <a href="/" class="btn-teal-solid">Back to Home</a>
+        </div>
+    </nav> -->
+
+    <!-- ── Main ── -->
+    <main class="auth-main">
+        <div class="auth-card">
+            <div class="auth-logo-wrap">
+                <img src="Group 3 (4)-Photoroom.png" alt="AppVerge" class="navbar-brand-logo" style="display:block; margin:0 auto;"/>
+            </div>
+            <h2>Welcome back</h2>
+            <p class="auth-sub">Sign in to your AppVerge account</p>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control-auth" placeholder="you@company.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-icon-wrap">
+                        <input type="password" id="password" class="form-control-auth" placeholder="Enter your password" required />
+                        <button type="button" class="toggle-pw" onclick="togglePw('password', this)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="forgot-row">
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+
+            <div class="divider">or continue with</div>
+
+            <a href="#" class="btn-social">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+                Continue with Google
+            </a>
+
+            <p class="auth-footer-text">
+                Don't have an account? <a href="register.html">Sign up free</a>
+            </p>
+
+            <p class="auth-terms">
+                By signing in, you agree to our
+                <a href="terms-conditions.html">Terms &amp; Conditions</a> and
+                <a href="privacy-policy.html">Privacy Policy</a>.
+            </p>
+        </div>
+    </main>
+
+</div>
+
+<script>
+    function togglePw(fieldId, btn) {
+        const field = document.getElementById(fieldId);
+        const icon = btn.querySelector('i');
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        if (!email || !password) {
+            alert('Please fill in all fields.');
+            return;
+        }
+        // TODO: connect to authentication backend
+        console.log('Login submitted:', email);
+    });
+</script>
+</body>
+</html>

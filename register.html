@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | AppVerge Private Limited</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="vendor.min.css">
+    <link rel="stylesheet" href="app.min.css">
+    <link href="https://cdn.prod.website-files.com/68f4ee72649c170da7026b71/css/layrinth.webflow.shared.36e3e47f9.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>WebFont.load({ google: { families: ["Inter:regular,500,600,700"] } });</script>
+    <link href="https://cdn.prod.website-files.com/68f4ee72649c170da7026b71/68f4eeb9d0cdc0f8bf677238_Fav.svg" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        html { overflow-y: scroll !important; height: auto !important; }
+        body {
+            overflow: hidden !important;
+            height: auto !important;
+            overflow-x: hidden !important;
+            background: #07100a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Slim navbar ── */
+        .auth-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(7,16,10,0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .auth-nav img { height: 42px; }
+        .auth-nav-links { display: flex; gap: 10px; }
+        .auth-nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-ghost {
+            color: rgba(255,255,255,0.75);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-ghost:hover { border-color: #14ffc3; color: #14ffc3; }
+        .btn-teal-solid {
+            background: #14ffc3;
+            color: #000;
+            font-weight: 600;
+        }
+        .btn-teal-solid:hover { background: #00e0aa; color: #000; }
+
+        /* ── Auth card ── */
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-main::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(20,255,195,0.07) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .auth-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 44px 48px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(12px);
+        }
+        .auth-logo-wrap {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .auth-logo-wrap img { height: 48px; }
+        .auth-card h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .auth-card .auth-sub {
+            text-align: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        /* ── Form ── */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 8px;
+        }
+        .form-control-auth {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control-auth::placeholder { color: rgba(255,255,255,0.25); }
+        .form-control-auth:focus {
+            border-color: #14ffc3;
+            box-shadow: 0 0 0 3px rgba(20,255,195,0.12);
+        }
+        .form-control-auth.error { border-color: #ff5252; }
+        .input-icon-wrap { position: relative; }
+        .input-icon-wrap .form-control-auth { padding-right: 44px; }
+        .input-icon-wrap .toggle-pw {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.35);
+            cursor: pointer;
+            font-size: 15px;
+            background: none;
+            border: none;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .toggle-pw:hover { color: #14ffc3; }
+
+        /* Password strength */
+        .pw-strength-bar {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .pw-strength-bar span {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.1);
+            transition: background 0.3s;
+        }
+        .pw-strength-label {
+            font-size: 12px;
+            margin-top: 5px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Plan selector */
+        .plan-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .plan-option input[type="radio"] { display: none; }
+        .plan-option label {
+            display: block;
+            text-align: center;
+            padding: 12px 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .plan-option label strong {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        .plan-option input:checked + label {
+            border-color: #14ffc3;
+            background: rgba(20,255,195,0.08);
+            color: #14ffc3;
+        }
+        .plan-option label:hover { border-color: rgba(20,255,195,0.4); }
+
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+        .form-check input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            accent-color: #14ffc3;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .form-check label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+        .form-check label a { color: #14ffc3; text-decoration: none; }
+        .form-check label a:hover { text-decoration: underline; }
+
+        .btn-submit {
+            width: 100%;
+            background: #14ffc3;
+            color: #000;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background: #00e0aa; transform: translateY(-1px); }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled { background: rgba(20,255,195,0.3); cursor: not-allowed; transform: none; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: rgba(255,255,255,0.25);
+            font-size: 13px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-social {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        .btn-social:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .btn-social img { width: 18px; height: 18px; }
+
+        .auth-footer-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+        .auth-footer-text a {
+            color: #14ffc3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-footer-text a:hover { text-decoration: underline; }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 12px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 560px) {
+            .auth-card { padding: 32px 20px; }
+            .auth-nav { padding: 14px 20px; }
+            .form-row { grid-template-columns: 1fr; }
+            .plan-selector { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="auth-page">
+
+    <!-- ── Navbar ── -->
+    <!-- <nav class="auth-nav">
+        <a href="/"><img src="Group 3 (4)-Photoroom.png" alt="AppVerge" /></a>
+        <div class="auth-nav-links">
+            <a href="login.html" class="btn-ghost">Sign In</a>
+            <a href="/" class="btn-teal-solid">Back to Home</a>
+        </div>
+    </nav> -->
+
+    <!-- ── Main ── -->
+    <main class="auth-main">
+        <div class="auth-card">
+            <div class="auth-logo-wrap">
+                              <img src="Group 3 (4)-Photoroom.png" alt="AppVerge" class="navbar-brand-logo" style="display:block; margin:0 auto;"/>
+            </div>
+            <h2>Create your account</h2>
+            <p class="auth-sub">Start your free trial — no credit card required</p>
+
+            <form id="registerForm" novalidate>
+
+                <div class="section-label">Personal Details</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" class="form-control-auth" placeholder="Ravi" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" class="form-control-auth" placeholder="Sharma" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Work Email</label>
+                    <input type="email" id="email" class="form-control-auth" placeholder="you@company.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control-auth" placeholder="+91 98765 43210" />
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company / Business Name</label>
+                    <input type="text" id="company" class="form-control-auth" placeholder="Acme Pvt. Ltd." />
+                </div>
+
+                <div class="section-label" style="margin-top:8px;">Choose a Plan</div>
+                <div class="plan-selector">
+                    <div class="plan-option">
+                        <input type="radio" name="plan" id="planFree" value="free" checked />
+                        <label for="planFree"><strong>Starter</strong>Free</label>
+                    </div>
+                    <div class="plan-option">
+                        <input type="radio" name="plan" id="planPro" value="pro" />
+                        <label for="planPro"><strong>Pro</strong>&#x20B9;999/mo</label>
+                    </div>
+                    <div class="plan-option">
+                        <input type="radio" name="plan" id="planEnterprise" value="enterprise" />
+                        <label for="planEnterprise"><strong>Enterprise</strong>Custom</label>
+                    </div>
+                </div>
+
+                <div class="section-label">Set Password</div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-icon-wrap">
+                        <input type="password" id="password" class="form-control-auth" placeholder="Min. 8 characters" required oninput="checkStrength(this.value)" />
+                        <button type="button" class="toggle-pw" onclick="togglePw('password', this)"><i class="fa fa-eye"></i></button>
+                    </div>
+                    <div class="pw-strength-bar">
+                        <span id="bar1"></span><span id="bar2"></span><span id="bar3"></span><span id="bar4"></span>
+                    </div>
+                    <div class="pw-strength-label" id="pwLabel">Enter a password</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-icon-wrap">
+                        <input type="password" id="confirmPassword" class="form-control-auth" placeholder="Re-enter password" required />
+                        <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)"><i class="fa fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="agreeTerms" required />
+                    <label for="agreeTerms">
+                        I agree to AppVerge's <a href="terms-conditions.html" target="_blank">Terms &amp; Conditions</a>
+                        and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Create Account</button>
+            </form>
+
+            <!-- <div class="divider">or sign up with</div> -->
+
+            <!-- <a href="#" class="btn-social">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+                Continue with Google
+            </a> -->
+
+            <p class="auth-footer-text">
+                Already have an account? <a href="login.html">Sign in</a>
+            </p>
+        </div>
+    </main>
+
+</div>
+
+<script>
+    function togglePw(fieldId, btn) {
+        const field = document.getElementById(fieldId);
+        const icon = btn.querySelector('i');
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    function checkStrength(pw) {
+        const bars = [document.getElementById('bar1'), document.getElementById('bar2'),
+                      document.getElementById('bar3'), document.getElementById('bar4')];
+        const label = document.getElementById('pwLabel');
+        let score = 0;
+        if (pw.length >= 8) score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        const colors = ['#ff5252', '#ff9800', '#ffeb3b', '#14ffc3'];
+        const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+        bars.forEach((b, i) => b.style.background = i < score ? colors[score - 1] : 'rgba(255,255,255,0.1)');
+        label.textContent = pw.length === 0 ? 'Enter a password' : labels[score - 1] || 'Weak';
+        label.style.color = pw.length === 0 ? 'rgba(255,255,255,0.4)' : colors[score - 1];
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const password = document.getElementById('password').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        const agreed = document.getElementById('agreeTerms').checked;
+
+        if (!firstName || !lastName || !email || !password) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        if (password !== confirm) {
+            alert('Passwords do not match.');
+            document.getElementById('confirmPassword').classList.add('error');
+            return;
+        }
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters.');
+            return;
+        }
+        if (!agreed) {
+            alert('Please accept the Terms & Conditions to continue.');
+            return;
+        }
+        // TODO: connect to registration backend
+        console.log('Registration submitted:', email);
+    });
+</script>
+</body>
+</html>
