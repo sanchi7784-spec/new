@@ -1,0 +1,35 @@
+All admin and Staff member has Domain == 2 and Super Admin Domain == 0
+All role id has access to upload KYC in Staff & Vendor KYC
+
+Role Name: User Manager
+Role ID: 3
+Access Tab: Users, All Users
+
+Role Name: Product Manager
+Role ID: 4
+Access Tab: Products(All Products, Add Product, Categories), Inventory, Reports (Product Reports)
+
+Role Name: Ad Manager
+Role ID: 5
+Access Tab: Ads Banner
+
+Role Name: KYC Manager
+Role ID: 6
+Access Tab: All KYC, Staff & Vendor KYC
+
+Role Name: Business Setting Manager
+Role ID: 7
+Access Tab: Business Settings
+
+Role Name: Order Manager
+Role ID: 8
+Access Tab: Orders, All Orders, Reports (Order Reports)
+
+Role Name: Shop/Vendor Manager
+Role ID: 9
+Access Tab: Staff & Vendors
+
+
+Role Name:Delivery Manager
+Role ID:10
+Access Tab: Orders, All Orders,Delivery Charges
